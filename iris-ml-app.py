@@ -89,7 +89,7 @@ st.subheader("User Input Parameters")
 st.write(user_features)
 
 # Display predictions and probabilities with extra spacing between columns
-st.subheader("Model Predictions")
+st.subheader("Model Predictions - Non-Tuned")
 
 # Define columns with spacing
 for model_name, model in models.items():
