@@ -6,6 +6,7 @@ from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn import svm
 from sklearn.base import ClassifierMixin
 from typing import Tuple, Dict, Any
@@ -46,10 +47,11 @@ def load_models() -> Tuple[Dict[str, ClassifierMixin], Any]:
     os.makedirs(model_dir, exist_ok=True)  # Create the directory if it doesn't exist
 
     model_filenames = {
-        'Random Forest': os.path.join(model_dir, 'random_forest.pkl'),
-        'K-Nearest Neighbors': os.path.join(model_dir, 'knn.pkl'),
-        'Logistic Regression': os.path.join(model_dir, 'logistic_regression.pkl'),
-        'Support Vector Machine': os.path.join(model_dir, 'svm.pkl')
+    'Random Forest': os.path.join(model_dir, 'random_forest.pkl'),
+    'K-Nearest Neighbors': os.path.join(model_dir, 'knn.pkl'),
+    'Logistic Regression': os.path.join(model_dir, 'logistic_regression.pkl'),
+    'Support Vector Machine': os.path.join(model_dir, 'svm.pkl'),
+    'Gradient Boosting': os.path.join(model_dir, 'gradient_boosting.pkl')
     }
     
     models: Dict[str, ClassifierMixin] = {}
@@ -67,10 +69,12 @@ def load_models() -> Tuple[Dict[str, ClassifierMixin], Any]:
                 model = LogisticRegression(max_iter=200)
             elif name == 'Support Vector Machine':
                 model = svm.SVC(probability=True)
-            
+            elif name == 'Gradient Boosting':
+                model = GradientBoostingClassifier()
+
             model.fit(iris.data, iris.target)
             models[name] = model
-            
+
             with open(filename, 'wb') as file:
                 pickle.dump(model, file)
     
